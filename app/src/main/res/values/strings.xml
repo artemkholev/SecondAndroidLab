@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SecondAndroidLab</string>
+    <string name="item_title">Item Title</string>
+    <string name="recycler_view">Recycler View</string>
 </resources>

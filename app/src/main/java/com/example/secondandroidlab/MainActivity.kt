@@ -2,44 +2,23 @@ package com.example.secondandroidlab
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.secondandroidlab.adapter.PersonActionListener
-import com.example.secondandroidlab.adapter.PersonAdapter
-import com.example.secondandroidlab.databinding.ActivityMainBinding
-import com.example.secondandroidlab.model.Person
-import com.example.secondandroidlab.model.PersonListener
-import com.example.secondandroidlab.model.PersonService
+import androidx.recyclerview.widget.RecyclerView
+import com.example.secondandroidlab.adapter.ItemAdapter
+import com.example.secondandroidlab.model.generateRecyclerViewItems
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
-    private lateinit var adapter: PersonAdapter // Объект Adapter
-    private val personService: PersonService // Объект PersonService
-        get() = (applicationContext as App).personService
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_main)
 
-        val manager = LinearLayoutManager(this) // LayoutManager
-        adapter = PersonAdapter(object : PersonActionListener { // Создание объекта
-            override fun onPersonGetId(person: Person) =
-                Toast.makeText(this@MainActivity, "Persons ID: ${person.id}", Toast.LENGTH_SHORT).show()
+        val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
+        recyclerView.layoutManager = LinearLayoutManager(this)
 
-            override fun onPersonLike(person: Person) = personService.likePerson(person)
+        val items = generateRecyclerViewItems(20)
 
-            override fun onPersonRemove(person: Person) = personService.removePerson(person)
-
-            override fun onPersonMove(person: Person, moveBy: Int) = personService.movePerson(person, moveBy)
-
-        })
-        personService.addListener(listener)
-
-        binding.recyclerView.layoutManager = manager // Назначение LayoutManager для RecyclerView
-        binding.recyclerView.adapter = adapter // Назначение адаптера для RecyclerView
+        val adapter = ItemAdapter(items)
+        recyclerView.adapter = adapter
     }
-
-    private val listener: PersonListener = {adapter.data = it}
 }

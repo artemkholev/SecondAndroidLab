@@ -39,8 +39,8 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.recyclerview)
-    implementation(libs.javafaker)
+    implementation(libs.androidx.recyclerview.v121)
+    implementation(libs.androidx.cardview)
     implementation(libs.glide)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
